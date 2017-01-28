@@ -26,8 +26,29 @@ CLabyrinthe::CLabyrinthe(const unsigned & y, const unsigned & x) noexcept : m_Y(
 	
 	m_Labyrinthe = Laby;
 }
+
+CLabyrinthe::CLabyrinthe(const CLabyrinthe * lab) noexcept
+{
+    m_Y=lab->m_Y;
+    m_X=lab->m_X;
+    vector <vector <CCase>> Laby;
+    Laby.resize(lab->GetLabyrinthe().size());
+    for (unsigned i (0); i < lab->GetLabyrinthe().size(); ++i)
+    {
+        Laby[i].resize(lab->GetLabyrinthe()[0].size());
+
+        for (unsigned j (0); j < lab->GetLabyrinthe()[0].size(); ++ j)
+        {
+            Laby[i][j] = lab->GetLabyrinthe()[i][j];
+        }
+    }
+    m_Labyrinthe = Laby;
+}
+
 CLabyrinthe::~CLabyrinthe()
 {}
+
+
 
 /*** METHODES ***/
 void CLabyrinthe::Afficher()
@@ -146,6 +167,13 @@ void CLabyrinthe::Solve()
 
 	//  return Path;
 
+}
+
+CLabyrinthe CLabyrinthe::ReturnSolved()
+{
+    CLabyrinthe path(this);
+    path.Solve();
+    return path;
 }
 
 
@@ -414,7 +442,6 @@ void CLabyrinthe::GenLaby() noexcept
 	m_CoordEnter = make_pair(make_pair(RX, RY), Direction);
 	m_CoordExit = make_pair(make_pair(RXEch, RYEch), Direction);
 }
-
 
 pair<pair<unsigned, unsigned>, unsigned short> CLabyrinthe::GetCoordEnter()
 {
