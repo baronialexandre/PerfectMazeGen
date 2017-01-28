@@ -98,6 +98,68 @@ void CLabyrinthe::Afficher()
 			cout << mur;
 	}
 }
+
+void CLabyrinthe::AfficherPlusChemin()
+{
+    //DISREGARD L'inversion des directions des gets ... je sai pa pk mais c'est comme ça qu'il faut faire ;(
+    string vide = " ";
+    string chemin = ".";
+    string mur = "8";
+    CLabyrinthe berthier = this->ReturnSolved(); // OUEST = NORD ; NORD = EST ;
+    for (unsigned i(0); i < m_Labyrinthe.size(); ++i)
+    {
+        for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
+        {
+            cout << mur;
+            if(berthier.GetLabyrinthe()[i][j].GetOuest())
+                cout << chemin;
+            else if (m_Labyrinthe[i][j].GetOuest())
+                cout << vide;
+            else
+                cout << mur;
+            if (j == m_Labyrinthe[i].size() - 1)
+                cout << mur;
+        }
+        cout << endl;
+        for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
+        {
+            if(berthier.GetLabyrinthe()[i][j].GetNord())
+                cout << chemin;
+            else if (m_Labyrinthe[i][j].GetNord())
+                cout << vide;
+            else
+                cout << mur;
+            if (berthier.GetLabyrinthe()[i][j].GetSud()||berthier.GetLabyrinthe()[i][j].GetEst()||berthier.GetLabyrinthe()[i][j].GetOuest()||berthier.GetLabyrinthe()[i][j].GetNord())
+                cout << chemin;
+            else
+                cout << vide ;
+            if (j == m_Labyrinthe[i].size() - 1)
+            {
+                if(berthier.GetLabyrinthe()[i][j].GetSud())
+                    cout << chemin;
+                else if (m_Labyrinthe[i][j].GetSud())
+                    cout << vide;
+                else
+                    cout << mur;
+            }
+            //else cout << 'j';
+        }
+        cout << endl;
+    }
+    for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
+    {
+        cout << mur;
+        if(berthier.GetLabyrinthe()[m_Labyrinthe.size()-1][j].GetEst())
+            cout << chemin;
+        else if (m_Labyrinthe[m_Labyrinthe.size()-1][j].GetEst())
+            cout << vide;
+        else
+            cout << mur;
+        if (j == m_Labyrinthe[0].size() - 1)
+            cout << mur;
+    }
+}
+
 void CLabyrinthe::AfficherDebug()
 {
 	//A FIX SI BESOIN : les getters directions inversement qui vienne de la generation .

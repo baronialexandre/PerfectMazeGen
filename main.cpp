@@ -9,15 +9,14 @@ using namespace std;
 
 int main()
 {
-    CLabyrinthe john(6, 6);//COOOOL
-    //CLabyrinthe john(79, 44); //my terminal max
+    //CLabyrinthe john(12, 12);//COOOOL
+    CLabyrinthe john(79, 42); //my terminal max
     //CLabyrinthe john(3000,3000); // need more then 2000000 taille de la reserve de la pile (equivalent de 2Go de ram)
     john.GenLaby();
-	//john.Solve();
-	john.Afficher();
+    //john.Solve();
+    //john.Afficher();
     cout<<endl;
-    CLabyrinthe berthier = john.ReturnSolved();
-    berthier.Afficher();
+    john.AfficherPlusChemin();
     int non;
     cin>>non;
     return 0;

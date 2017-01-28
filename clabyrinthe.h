@@ -21,6 +21,7 @@ class CLabyrinthe
 		
 		/*** METHODES ***/
 		void Afficher();
+        void AfficherPlusChemin();
 		void AfficherDebug();
 		void Solve();
         CLabyrinthe ReturnSolved();
