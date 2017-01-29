@@ -7,9 +7,81 @@
 
 using namespace std;
 
-int main()
+void Display(CLabyrinthe bob)
+{
+    bob.Afficher();
+}
+void DisplaySolved(CLabyrinthe bob)
+{
+    bob.AfficherPlusChemin();
+}
+void SaveAsText(CLabyrinthe bob)
 {
     ofstream fw;
+    cout << "filename ? (.txt added automatically)"<<endl;
+    string fn;
+    cin >> fn;
+    fw.open(fn+".txt");
+    std::streambuf *oldbuf = std::cout.rdbuf(); //save
+    std::cout.rdbuf(fw.rdbuf());
+    bob.Afficher();
+    std::cout.rdbuf(oldbuf);
+    cout << "file saved !" << endl;
+}
+void SaveAsTextSolved(CLabyrinthe bob)
+{
+    ofstream fw;
+    cout << "filename ? (.txt added automatically)"<<endl;
+    string fn;
+    cin >> fn;
+    fw.open(fn+".txt");
+    std::streambuf *oldbuf = std::cout.rdbuf(); //save
+    std::cout.rdbuf(fw.rdbuf());
+    bob.AfficherPlusChemin();
+    std::cout.rdbuf(oldbuf);
+    cout << "file saved !" << endl;
+}
+
+int main()
+{
+
+    int newmaze(1);
+    while (newmaze==1)
+    {
+
+        newmaze = 0;
+        cout << "vvelcome to the best maze gen you ever executed on your machine" << endl
+             << "Please input the number of rows for the maze : ";
+        int rows;
+        cin >> rows;
+        cout << "And now the number of columns for the maze : ";
+        int columns;
+        cin >> columns;
+        cout << "Very good , generating a " << rows << " * " << columns <<" maze !";
+        CLabyrinthe bob(columns,rows);
+        cout << "!";
+        bob.GenLaby();
+        cout << endl << "The maze was randomly generated" << endl ;
+        string watdoyoudo;
+        while(watdoyoudo!="quit"){
+            cout << endl << "what do you want to do with it ? (display|displaysolved|saveastext|saveastextsolved|newmaze|quit)"<< endl;
+            getline(cin,watdoyoudo);
+            if (watdoyoudo == "display")
+                Display(bob);
+            else if (watdoyoudo == "displaysolved")
+                DisplaySolved(bob);
+            else if (watdoyoudo == "saveastext")
+                SaveAsText(bob);
+            else if (watdoyoudo == "saveastextsolved")
+                SaveAsTextSolved(bob);
+            else if (watdoyoudo == "newmaze")
+                newmaze=1;
+            }
+
+    }
+    return 0;
+}
+/*  ofstream fw;
     fw.open("text.txt");
     std::streambuf *oldbuf = std::cout.rdbuf(); //save
     std::cout.rdbuf(fw.rdbuf());
@@ -28,6 +100,4 @@ int main()
     std::cout.rdbuf(oldbuf);
     cout<<endl;
     int non;
-    //cin>>non;
-    return 0;
-}
+    //cin>>non;*/
