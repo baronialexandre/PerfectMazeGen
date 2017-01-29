@@ -22,10 +22,7 @@ void SaveAsText(CLabyrinthe bob)
     string fn;
     cin >> fn;
     fw.open(fn+".txt");
-    std::streambuf *oldbuf = std::cout.rdbuf(); //save
-    std::cout.rdbuf(fw.rdbuf());
-    bob.Afficher();
-    std::cout.rdbuf(oldbuf);
+    bob.Afficher(fw);
     cout << "file saved !" << endl;
 }
 void SaveAsTextSolved(CLabyrinthe bob)
@@ -35,10 +32,7 @@ void SaveAsTextSolved(CLabyrinthe bob)
     string fn;
     cin >> fn;
     fw.open(fn+".txt");
-    std::streambuf *oldbuf = std::cout.rdbuf(); //save
-    std::cout.rdbuf(fw.rdbuf());
-    bob.AfficherPlusChemin();
-    std::cout.rdbuf(oldbuf);
+    bob.AfficherPlusChemin(fw);
     cout << "file saved !" << endl;
 }
 
@@ -62,20 +56,20 @@ int main()
         bob.GenLaby();
         cout << endl << "The maze was randomly generated yay" << endl ;
         string watdoyoudo;
-        while(watdoyoudo!="quit"){
+        while(watdoyoudo!="quit"||watdoyoudo!="6"){
+            cout << endl << "what do you want to do with it?\n 1) display \n 2) displaysolved \n 3) saveastext \n 4) saveastextsolved \n 5) newmaze \n 6) quit"<< endl;
             getline(cin,watdoyoudo);
-            if (watdoyoudo == "display")
+            if (watdoyoudo == "display"||watdoyoudo == "1")
                 Display(bob);
-            else if (watdoyoudo == "displaysolved")
+            else if (watdoyoudo == "displaysolved"||watdoyoudo == "2")
                 DisplaySolved(bob);
-            else if (watdoyoudo == "saveastext")
+            else if (watdoyoudo == "saveastext"||watdoyoudo == "3")
                 SaveAsText(bob);
-            else if (watdoyoudo == "saveastextsolved")
+            else if (watdoyoudo == "saveastextsolved"||watdoyoudo == "4")
                 SaveAsTextSolved(bob);
-            else if (watdoyoudo == "newmaze")
+            else if (watdoyoudo == "newmaze"||watdoyoudo == "5")
                 newmaze=1;
-            cout << endl << "what do you want to do with it ? (display|displaysolved|saveastext|saveastextsolved|newmaze|quit)"<< endl;
-            }
+        }
     }
     return 0;
 }

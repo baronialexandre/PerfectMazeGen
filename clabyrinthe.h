@@ -2,7 +2,7 @@
 #include "ccase.h"
 #include <vector>
 #include <utility>
-
+#include <fstream>
 class CLabyrinthe
 {
     private:
@@ -20,8 +20,10 @@ class CLabyrinthe
 		
 		
 		/*** METHODES ***/
-		void Afficher();
+        void Afficher();
         void AfficherPlusChemin();
+        void Afficher(std::ofstream &bobstream);
+        void AfficherPlusChemin(std::ofstream &bobstream);
 		void AfficherDebug();
 		void Solve();
         CLabyrinthe ReturnSolved();

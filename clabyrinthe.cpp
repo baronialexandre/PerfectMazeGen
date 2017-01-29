@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <ctime>
+#include <fstream>
 using namespace std;
 
 CLabyrinthe::CLabyrinthe(const unsigned & y, const unsigned & x) noexcept : m_Y(y), m_X(x)
@@ -40,8 +41,10 @@ CLabyrinthe::CLabyrinthe(const CLabyrinthe * lab) noexcept
         for (unsigned j (0); j < lab->GetLabyrinthe()[0].size(); ++ j)
         {
             Laby[i][j] = lab->GetLabyrinthe()[i][j];
+            cout << i * m_X + j << "/" << m_X * m_Y - 1  << "\r"; //DUPLICATION DE LAB PROGRESSION
         }
     }
+    cout << endl;
     m_Labyrinthe = Laby;
 }
 
@@ -53,50 +56,51 @@ CLabyrinthe::~CLabyrinthe()
 /*** METHODES ***/
 void CLabyrinthe::Afficher()
 {
-	//DISREGARD L'inversion des directions des gets ... je sai pa pk mais c'est comme ça qu'il faut faire ;(
-	string vide = " ";
-	string mur = "8";
-	for (unsigned i(0); i < m_Labyrinthe.size(); ++i)
-	{
-		for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
-		{
-			cout << mur;
-			if (m_Labyrinthe[i][j].GetOuest())
-				cout << vide;
-			else
-				cout << mur;
-			if (j == m_Labyrinthe[i].size() - 1)
-				cout << mur;
-		}
-		cout << endl;
-		for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
-		{
-			if (m_Labyrinthe[i][j].GetNord())
-				cout << vide;
-			else
-				cout << mur;
-			cout << vide;
-			if (j == m_Labyrinthe[i].size() - 1)
-			{
-				if (m_Labyrinthe[i][j].GetSud())
-					cout << vide;
-				else
-					cout << mur;
-			}
-			//else cout << 'j';
-		}
-		cout << endl;
-	}
-	for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
-	{
-		cout << mur;
-		if (m_Labyrinthe[m_Labyrinthe.size()-1][j].GetEst())
-			cout << vide;
-		else
-			cout << mur;
-		if (j == m_Labyrinthe[0].size() - 1)
-			cout << mur;
-	}
+    //DISREGARD L'inversion des directions des gets ... je sai pa pk mais c'est comme ça qu'il faut faire ;(
+    string vide = " ";
+    string mur = "8";
+    for (unsigned i(0); i < m_Labyrinthe.size(); ++i)
+    {
+        for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
+        {
+            cout << mur;
+            if (m_Labyrinthe[i][j].GetOuest())
+                cout << vide;
+            else
+                cout << mur;
+            if (j == m_Labyrinthe[i].size() - 1)
+                cout << mur;
+        }
+        cout << endl;
+        for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
+        {
+            if (m_Labyrinthe[i][j].GetNord())
+                cout << vide;
+            else
+                cout << mur;
+            cout << vide;
+            if (j == m_Labyrinthe[i].size() - 1)
+            {
+                if (m_Labyrinthe[i][j].GetSud())
+                    cout << vide;
+                else
+                    cout << mur;
+            }
+            //else cout << 'j';
+        }
+        cout << endl;
+    }
+    for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
+    {
+        cout << mur;
+        if (m_Labyrinthe[m_Labyrinthe.size()-1][j].GetEst())
+            cout << vide;
+        else
+            cout << mur;
+        if (j == m_Labyrinthe[0].size() - 1)
+            cout << mur;
+    }
+
 }
 
 void CLabyrinthe::AfficherPlusChemin()
@@ -144,7 +148,7 @@ void CLabyrinthe::AfficherPlusChemin()
             }
             //else cout << 'j';
         }
-        cout << endl;
+        cout << i << endl;
     }
     for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
     {
@@ -157,6 +161,115 @@ void CLabyrinthe::AfficherPlusChemin()
             cout << mur;
         if (j == m_Labyrinthe[0].size() - 1)
             cout << mur;
+    }
+}
+void CLabyrinthe::Afficher(ofstream &bobstream )
+{
+	//DISREGARD L'inversion des directions des gets ... je sai pa pk mais c'est comme ça qu'il faut faire ;(
+	string vide = " ";
+	string mur = "8";
+	for (unsigned i(0); i < m_Labyrinthe.size(); ++i)
+	{
+		for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
+		{
+            bobstream << mur;
+			if (m_Labyrinthe[i][j].GetOuest())
+                bobstream << vide;
+			else
+                bobstream << mur;
+			if (j == m_Labyrinthe[i].size() - 1)
+                bobstream << mur;
+		}
+        bobstream << endl;
+		for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
+		{
+			if (m_Labyrinthe[i][j].GetNord())
+                bobstream << vide;
+			else
+                bobstream << mur;
+            bobstream << vide;
+			if (j == m_Labyrinthe[i].size() - 1)
+			{
+				if (m_Labyrinthe[i][j].GetSud())
+                    bobstream << vide;
+				else
+                    bobstream << mur;
+            }
+            //else bobstream << 'j';
+        }
+        bobstream << endl;
+	}
+	for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
+	{
+        bobstream << mur;
+		if (m_Labyrinthe[m_Labyrinthe.size()-1][j].GetEst())
+            bobstream << vide;
+		else
+            bobstream << mur;
+		if (j == m_Labyrinthe[0].size() - 1)
+            bobstream << mur;
+	}
+
+}
+
+void CLabyrinthe::AfficherPlusChemin(ofstream &bobstream )
+{
+    //DISREGARD L'inversion des directions des gets ... je sai pa pk mais c'est comme ça qu'il faut faire ;(
+    string vide = " ";
+    string chemin = ".";
+    string mur = "8";
+    CLabyrinthe berthier = this->ReturnSolved(); // OUEST = NORD ; NORD = EST ;
+    for (unsigned i(0); i < m_Labyrinthe.size(); ++i)
+    {
+        for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
+        {
+            bobstream << mur;
+            if(berthier.GetLabyrinthe()[i][j].GetOuest())
+                bobstream << chemin;
+            else if (m_Labyrinthe[i][j].GetOuest())
+                bobstream << vide;
+            else
+                bobstream << mur;
+            if (j == m_Labyrinthe[i].size() - 1)
+                bobstream << mur;
+        }
+        bobstream << endl;
+        for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
+        {
+            if(berthier.GetLabyrinthe()[i][j].GetNord())
+                bobstream << chemin;
+            else if (m_Labyrinthe[i][j].GetNord())
+                bobstream << vide;
+            else
+                bobstream << mur;
+            if (berthier.GetLabyrinthe()[i][j].GetSud()||berthier.GetLabyrinthe()[i][j].GetEst()||berthier.GetLabyrinthe()[i][j].GetOuest()||berthier.GetLabyrinthe()[i][j].GetNord())
+                bobstream << chemin;
+            else
+                bobstream << vide ;
+            if (j == m_Labyrinthe[i].size() - 1)
+            {
+                if(berthier.GetLabyrinthe()[i][j].GetSud())
+                    bobstream << chemin;
+                else if (m_Labyrinthe[i][j].GetSud())
+                    bobstream << vide;
+                else
+                    bobstream << mur;
+            }
+            //else bobstream << 'j';
+        }
+        bobstream << endl;
+    }
+    for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
+    {
+        bobstream << mur;
+        if(berthier.GetLabyrinthe()[m_Labyrinthe.size()-1][j].GetEst())
+            bobstream << chemin;
+        else if (m_Labyrinthe[m_Labyrinthe.size()-1][j].GetEst())
+            bobstream << vide;
+        else
+            bobstream << mur;
+        if (j == m_Labyrinthe[0].size() - 1)
+            bobstream << mur;
     }
 }
 
@@ -194,39 +307,44 @@ void CLabyrinthe::AfficherDebug()
 
 void CLabyrinthe::Solve()
 {
-	//AfficherDebug();
-	for (unsigned i = 0; i < (m_X - 1) + (m_Y - 1); ++i)
-	{
+    //AfficherDebug();
+    bool murajoute(true);
+    for (unsigned i = 0 ; i < (m_X - 1) + (m_Y - 1) && murajoute ; ++i)
+    {
+        murajoute=false;
 		for (unsigned j = 0; j < m_Labyrinthe.size(); ++j)
 		{
 			for (unsigned k = 0; k < m_Labyrinthe[j].size(); ++k)
-			{
+            {
 				if (!m_Labyrinthe[j][k].GetEst() && !m_Labyrinthe[j][k].GetOuest() && !m_Labyrinthe[j][k].GetNord() && m_Labyrinthe[j][k].GetSud())      // Si Est Ouest Nord = Mur alors on met un mur au sud |-|
 				{
+                    murajoute=true;
 					m_Labyrinthe[j][k + 1].setNord();
 					m_Labyrinthe[j][k].setSud();
 				}
 				if (!m_Labyrinthe[j][k].GetEst() && !m_Labyrinthe[j][k].GetOuest() && !m_Labyrinthe[j][k].GetSud() && m_Labyrinthe[j][k].GetNord())  // Si Est Ouest Sud = Mur alors on met un mur au nord  |_|
 				{
+                    murajoute=true;
 					m_Labyrinthe[j][k - 1].setSud();
 					m_Labyrinthe[j][k].setNord();
 				}
 				if (!m_Labyrinthe[j][k].GetNord() && !m_Labyrinthe[j][k].GetOuest() && !m_Labyrinthe[j][k].GetSud() && m_Labyrinthe[j][k].GetEst()) // Si Nord Ouest Sud = Mur alors on met un mur a l'est
 				{
+                    murajoute=true;
 					m_Labyrinthe[j + 1][k].setOuest();
 					m_Labyrinthe[j][k].setEst();
 				}
 				if (!m_Labyrinthe[j][k].GetNord() && !m_Labyrinthe[j][k].GetSud() && !m_Labyrinthe[j][k].GetEst() && m_Labyrinthe[j][k].GetOuest())   // Si Nord Sud Est = Mur alors on met un mur a l'ouest
 				{
+                    murajoute=true;
 					m_Labyrinthe[j - 1][k].setEst();
 					m_Labyrinthe[j][k].setOuest();
-
-				}
-				
+                }
 			}
-		}
+        }
+        cout << i << "/" << (m_X - 1) + (m_Y - 1) << "\r"; //RECHERCHE CHEMIN DE SORTI PROGRESSION
 	}
-
+    cout << endl;
 	//  return Path;
 
 }
@@ -451,7 +569,7 @@ void CLabyrinthe::GenLaby() noexcept
 			// chemin l'ID de la premiere case
 			IdChemin(m_Labyrinthe[RX][RY].GetId(), Direction, RXEch, RYEch, this);
 			//On sort de la boucle de création de chemin quand on a créé m*n-1
-            cout << cpt << "/" << (m_X*m_Y) - 1 << "\r";
+            cout << cpt << "/" << (m_X*m_Y) - 1 << "\r"; //AFFICHAGE PROGRESSION
 			if (cpt >= (m_X*m_Y) - 1)break;
 		}
 	}
