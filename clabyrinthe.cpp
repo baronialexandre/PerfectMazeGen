@@ -451,6 +451,7 @@ void CLabyrinthe::GenLaby() noexcept
 			// chemin l'ID de la premiere case
 			IdChemin(m_Labyrinthe[RX][RY].GetId(), Direction, RXEch, RYEch, this);
 			//On sort de la boucle de création de chemin quand on a créé m*n-1
+            cout << cpt << "/" << (m_X*m_Y) - 1 << "\r";
 			if (cpt >= (m_X*m_Y) - 1)break;
 		}
 	}

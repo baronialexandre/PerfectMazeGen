@@ -51,20 +51,18 @@ int main()
 
         newmaze = 0;
         cout << "vvelcome to the best maze gen you ever executed on your machine" << endl
-             << "Please input the number of rows for the maze : ";
+             << "Please input the number of rows for the maze : " << endl;
         int rows;
         cin >> rows;
-        cout << "And now the number of columns for the maze : ";
+        cout << "And now the number of columns for the maze : "<< endl;
         int columns;
         cin >> columns;
-        cout << "Very good , generating a " << rows << " * " << columns <<" maze !";
+        cout << "Very good , generating a " << rows << " * " << columns <<" maze !"<<endl;
         CLabyrinthe bob(columns,rows);
-        cout << "!";
         bob.GenLaby();
-        cout << endl << "The maze was randomly generated" << endl ;
+        cout << endl << "The maze was randomly generated yay" << endl ;
         string watdoyoudo;
         while(watdoyoudo!="quit"){
-            cout << endl << "what do you want to do with it ? (display|displaysolved|saveastext|saveastextsolved|newmaze|quit)"<< endl;
             getline(cin,watdoyoudo);
             if (watdoyoudo == "display")
                 Display(bob);
@@ -76,8 +74,8 @@ int main()
                 SaveAsTextSolved(bob);
             else if (watdoyoudo == "newmaze")
                 newmaze=1;
+            cout << endl << "what do you want to do with it ? (display|displaysolved|saveastext|saveastextsolved|newmaze|quit)"<< endl;
             }
-
     }
     return 0;
 }
