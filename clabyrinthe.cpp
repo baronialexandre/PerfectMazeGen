@@ -41,7 +41,7 @@ CLabyrinthe::CLabyrinthe(const CLabyrinthe * lab) noexcept
         for (unsigned j (0); j < lab->GetLabyrinthe()[0].size(); ++ j)
         {
             Laby[i][j] = lab->GetLabyrinthe()[i][j];
-            cout << i * m_X + j << "/" << m_X * m_Y - 1  << "\r"; //DUPLICATION DE LAB PROGRESSION
+            cout << i * m_Y + j << "/" << m_X * m_Y - 1  << " MAZE DUPLICATION \r"; //DUPLICATION DE LAB PROGRESSION
         }
     }
     cout << endl;
@@ -198,6 +198,7 @@ void CLabyrinthe::Afficher(ofstream &bobstream )
             //else bobstream << 'j';
         }
         bobstream << endl;
+        cout << i+1 << "/" << m_Labyrinthe.size() << " EXPORT PROGRESSION\r"; //export PROGRESSION
 	}
 	for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
 	{
@@ -258,6 +259,7 @@ void CLabyrinthe::AfficherPlusChemin(ofstream &bobstream )
             //else bobstream << 'j';
         }
         bobstream << endl;
+        cout << i+1 << "/" << m_Labyrinthe.size() << " EXPORT PROGRESSION\r"; //export PROGRESSION
     }
     for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
     {
@@ -271,6 +273,7 @@ void CLabyrinthe::AfficherPlusChemin(ofstream &bobstream )
         if (j == m_Labyrinthe[0].size() - 1)
             bobstream << mur;
     }
+    cout << endl;
 }
 
 void CLabyrinthe::AfficherDebug()
@@ -309,7 +312,7 @@ void CLabyrinthe::Solve()
 {
     //AfficherDebug();
     bool murajoute(true);
-    for (unsigned i = 0 ; i < (m_X - 1) + (m_Y - 1) && murajoute ; ++i)
+    for (unsigned i = 0 ; murajoute ; ++i)
     {
         murajoute=false;
 		for (unsigned j = 0; j < m_Labyrinthe.size(); ++j)
@@ -342,9 +345,8 @@ void CLabyrinthe::Solve()
                 }
 			}
         }
-        cout << i << "/" << (m_X - 1) + (m_Y - 1) << "\r"; //RECHERCHE CHEMIN DE SORTI PROGRESSION
-	}
-    cout << endl;
+        //cout << i << "/" << (m_X - 1) + (m_Y - 1) << "Theorical Indicator\r"; //RECHERCHE CHEMIN DE SORTI PROGRESSION
+    }
 	//  return Path;
 
 }
