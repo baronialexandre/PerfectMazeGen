@@ -163,117 +163,167 @@ void CLabyrinthe::AfficherPlusChemin()
             cout << mur;
     }
 }
-void CLabyrinthe::Afficher(ofstream &bobstream )
+
+void CLabyrinthe::Afficher(ofstream &bobstream)
 {
-	//DISREGARD L'inversion des directions des gets ... je sai pa pk mais c'est comme ça qu'il faut faire ;(
-	string vide = " ";
-	string mur = "8";
-	for (unsigned i(0); i < m_Labyrinthe.size(); ++i)
-	{
-		for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
-		{
-            bobstream << mur;
-			if (m_Labyrinthe[i][j].GetOuest())
-                bobstream << vide;
-			else
-                bobstream << mur;
-			if (j == m_Labyrinthe[i].size() - 1)
-                bobstream << mur;
-		}
-        bobstream << endl;
-		for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
-		{
-			if (m_Labyrinthe[i][j].GetNord())
-                bobstream << vide;
-			else
-                bobstream << mur;
-            bobstream << vide;
-			if (j == m_Labyrinthe[i].size() - 1)
-			{
-				if (m_Labyrinthe[i][j].GetSud())
-                    bobstream << vide;
-				else
-                    bobstream << mur;
-            }
-            //else bobstream << 'j';
+    //DISREGARD L'inversion des directions des gets ... je sai pa pk mais c'est comme ça qu'il faut faire ;(
+    string vide = " ";
+    string mur = "8";
+    string buffer = "";
+    clock_t begin = clock();
+
+    for (unsigned i(0); i < m_Labyrinthe.size(); ++i)
+    {
+        for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
+        {
+            buffer += mur;
+            if (m_Labyrinthe[i][j].GetOuest())
+                buffer += vide;
+            else
+                buffer += mur;
+            if (j == m_Labyrinthe[i].size() - 1)
+                buffer += mur;
         }
-        bobstream << endl;
+        buffer += '\n';
+        for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
+        {
+            if (m_Labyrinthe[i][j].GetNord())
+                buffer += vide;
+            else
+                buffer += mur;
+            buffer += vide;
+            if (j == m_Labyrinthe[i].size() - 1)
+            {
+                if (m_Labyrinthe[i][j].GetSud())
+                    buffer += vide;
+                else
+                    buffer += mur;
+            }
+            //else buffer += 'j';
+        }
+        buffer += '\n';
+        if (buffer.length() >= 4096 - m_Labyrinthe[0].size()){
+            bobstream << buffer;
+            buffer = "";
+        }
         cout << i+1 << "/" << m_Labyrinthe.size() << " EXPORT PROGRESSION\r"; //export PROGRESSION
-	}
-	for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
-	{
-        bobstream << mur;
-		if (m_Labyrinthe[m_Labyrinthe.size()-1][j].GetEst())
-            bobstream << vide;
-		else
-            bobstream << mur;
-		if (j == m_Labyrinthe[0].size() - 1)
-            bobstream << mur;
-	}
+    }
+    for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
+    {
+        buffer += mur;
+        if (m_Labyrinthe[m_Labyrinthe.size()-1][j].GetEst())
+            buffer += vide;
+        else
+            buffer += mur;
+        if (j == m_Labyrinthe[0].size() - 1)
+            buffer += mur;
+    }
+
+    bobstream << buffer;
+    buffer = "";
+
+    clock_t end = clock();
+    int seconds = int(end - begin) / CLOCKS_PER_SEC;
+    int hours, minutes;
+    minutes = seconds / 60;
+    hours = minutes / 60;
+    cout << seconds << " seconds is equivalent to " << hours << " hours " << minutes%60
+         << " minutes " << seconds%60 << " seconds." << endl;
+
 
 }
 
-void CLabyrinthe::AfficherPlusChemin(ofstream &bobstream )
+void CLabyrinthe::AfficherPlusChemin(ofstream &bobstream)
 {
     //DISREGARD L'inversion des directions des gets ... je sai pa pk mais c'est comme ça qu'il faut faire ;(
     string vide = " ";
     string chemin = ".";
     string mur = "8";
+    string buffer = "";
+    clock_t begin = clock();
     CLabyrinthe berthier = this->ReturnSolved(); // OUEST = NORD ; NORD = EST ;
+
+    clock_t end = clock();
+    int seconds = int(end - begin) / CLOCKS_PER_SEC;
+    int hours, minutes;
+    minutes = seconds / 60;
+    hours = minutes / 60;
+    cout << seconds << " seconds is equivalent to " << hours << " hours " << minutes%60
+         << " minutes " << seconds%60 << " seconds." << endl;
+
+    clock_t begin2 = clock();
     for (unsigned i(0); i < m_Labyrinthe.size(); ++i)
     {
         for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
         {
-            bobstream << mur;
+            buffer += mur;
             if(berthier.GetLabyrinthe()[i][j].GetOuest())
-                bobstream << chemin;
+                buffer += chemin;
             else if (m_Labyrinthe[i][j].GetOuest())
-                bobstream << vide;
+                buffer += vide;
             else
-                bobstream << mur;
+                buffer += mur;
             if (j == m_Labyrinthe[i].size() - 1)
-                bobstream << mur;
+                buffer += mur;
         }
-        bobstream << endl;
+        buffer += '\n';
         for (unsigned j(0); j < m_Labyrinthe[i].size(); ++j)
         {
             if(berthier.GetLabyrinthe()[i][j].GetNord())
-                bobstream << chemin;
+                buffer += chemin;
             else if (m_Labyrinthe[i][j].GetNord())
-                bobstream << vide;
+                buffer += vide;
             else
-                bobstream << mur;
+                buffer += mur;
             if (berthier.GetLabyrinthe()[i][j].GetSud()||berthier.GetLabyrinthe()[i][j].GetEst()||berthier.GetLabyrinthe()[i][j].GetOuest()||berthier.GetLabyrinthe()[i][j].GetNord())
-                bobstream << chemin;
+                buffer += chemin;
             else
-                bobstream << vide ;
+                buffer += vide ;
             if (j == m_Labyrinthe[i].size() - 1)
             {
                 if(berthier.GetLabyrinthe()[i][j].GetSud())
-                    bobstream << chemin;
+                    buffer += chemin;
                 else if (m_Labyrinthe[i][j].GetSud())
-                    bobstream << vide;
+                    buffer += vide;
                 else
-                    bobstream << mur;
+                    buffer += mur;
             }
-            //else bobstream << 'j';
+            //else buffer += 'j';
         }
-        bobstream << endl;
+        buffer += '\n';
+        if (buffer.length() >= 4096 - m_Labyrinthe[0].size()){
+            bobstream << buffer;
+            buffer = "";
+        }
         cout << i+1 << "/" << m_Labyrinthe.size() << " EXPORT PROGRESSION\r"; //export PROGRESSION
     }
     for (unsigned j(0); j < m_Labyrinthe[0].size(); ++j)
     {
-        bobstream << mur;
+        buffer += mur;
         if(berthier.GetLabyrinthe()[m_Labyrinthe.size()-1][j].GetEst())
-            bobstream << chemin;
+            buffer += chemin;
         else if (m_Labyrinthe[m_Labyrinthe.size()-1][j].GetEst())
-            bobstream << vide;
+            buffer += vide;
         else
-            bobstream << mur;
+            buffer += mur;
         if (j == m_Labyrinthe[0].size() - 1)
-            bobstream << mur;
+            buffer += mur;
     }
+
+    bobstream << buffer;
+    buffer = "";
+
+    clock_t end2 = clock();
+
     cout << endl;
+
+    int seconds2 = int(end2 - begin2) / CLOCKS_PER_SEC;
+    int hours2, minutes2;
+    minutes2 = seconds2 / 60;
+    hours2 = minutes2 / 60;
+    cout << seconds2 << " seconds is equivalent to " << hours2 << " hours " << minutes2%60
+         << " minutes " << seconds2%60 << " seconds." << endl;
+
 }
 
 void CLabyrinthe::AfficherDebug()
