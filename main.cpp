@@ -36,42 +36,42 @@ void SaveAsTextSolved(CLabyrinthe bob)
     cout << "file saved !" << endl;
 }
 
+CLabyrinthe CreateMaze()
+{
+    cout << "Please input the number of rows for the maze : " << endl;
+    int rows;
+    cin >> rows;
+    cout << "And now the number of columns for the maze : "<< endl;
+    int columns;
+    cin >> columns;
+    cout << "Very good , generating a " << rows << " * " << columns <<" maze !"<<endl;
+    CLabyrinthe bob(columns,rows);
+    bob.GenLaby();
+    cout << endl << "The maze was randomly generated yay" << endl ;
+    return bob;
+}
+
 int main()
 {
-
-    int newmaze(1);
-    while (newmaze==1)
-    {
-
-        newmaze = 0;
-        cout << "vvelcome to the best maze gen you ever executed on your machine" << endl
-             << "Please input the number of rows for the maze : " << endl;
-        int rows;
-        cin >> rows;
-        cout << "And now the number of columns for the maze : "<< endl;
-        int columns;
-        cin >> columns;
-        cout << "Very good , generating a " << rows << " * " << columns <<" maze !"<<endl;
-        CLabyrinthe bob(columns,rows);
-        bob.GenLaby();
-        cout << endl << "The maze was randomly generated yay" << endl ;
-        string watdoyoudo;
-        while(watdoyoudo!="quit"||watdoyoudo!="6"){
-            cout << endl << "what do you want to do with it?\n 1) display \n 2) displaysolved \n 3) saveastext \n 4) saveastextsolved \n 5) newmaze \n 6) quit"<< endl;
-            getline(cin,watdoyoudo);
-            if (watdoyoudo == "display"||watdoyoudo == "1")
-                Display(bob);
-            else if (watdoyoudo == "displaysolved"||watdoyoudo == "2")
-                DisplaySolved(bob);
-            else if (watdoyoudo == "saveastext"||watdoyoudo == "3")
-                SaveAsText(bob);
-            else if (watdoyoudo == "saveastextsolved"||watdoyoudo == "4")
-                SaveAsTextSolved(bob);
-            else if (watdoyoudo == "newmaze"||watdoyoudo == "5")
-                newmaze=1;
-        }
+    CLabyrinthe bob = CreateMaze();
+    string watdoyoudo;
+    for(;;){
+       getline(cin,watdoyoudo);
+        if (watdoyoudo == "display"||watdoyoudo == "1")
+            Display(bob);
+        else if (watdoyoudo == "displaysolved"||watdoyoudo == "2")
+            DisplaySolved(bob);
+        else if (watdoyoudo == "saveastext"||watdoyoudo == "3")
+            SaveAsText(bob);
+        else if (watdoyoudo == "saveastextsolved"||watdoyoudo == "4")
+            SaveAsTextSolved(bob);
+        else if (watdoyoudo == "newmaze"||watdoyoudo == "5")
+            bob = CreateMaze();
+        else if (watdoyoudo == "quit" ||watdoyoudo == "6")
+            break;
+        cout << endl << "what do you want to do with it?\n 1) display \n 2) displaysolved \n 3) saveastext \n 4) saveastextsolved \n 5) newmaze \n 6) quit"<< endl;
     }
-    return 0;
+   return 0;
 }
 /*  ofstream fw;
     fw.open("text.txt");
@@ -81,7 +81,7 @@ int main()
     //CLabyrinthe john(12, 12);//COOOOL
     CLabyrinthe john(79, 42); //my terminal max
     //CLabyrinthe john(100,100);
-    //CLabyrinthe john(3000,3000); // need more then 2000000 taille de la reserve de la pile (equivalent de 2Go de ram)
+    //CLabyrinthe john(3000,3000); // need more then 2000000 taille de la reserve de la pile (equivalent de 2Go de ram) sur visual studio
     john.GenLaby();
     //john.Solve();
     //john.Afficher();
