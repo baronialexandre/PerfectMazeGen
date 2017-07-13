@@ -56,7 +56,7 @@ int main()
     CLabyrinthe bob = CreateMaze();
     string watdoyoudo;
     for(;;){
-       getline(cin,watdoyoudo);
+        getline(cin,watdoyoudo);
         if (watdoyoudo == "display"||watdoyoudo == "1")
             Display(bob);
         else if (watdoyoudo == "displaysolved"||watdoyoudo == "2")
